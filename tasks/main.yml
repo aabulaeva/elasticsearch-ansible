@@ -35,7 +35,17 @@
   command: 'sed -i "s/#network.host: 192.168.0.1/network.host: {{elasticsearch_ip}}/g" elasticsearch.yml'
   args:
     chdir: /etc/elasticsearch
-
+- name: configure elasticsearch
+  become: yes
+  command: 'sed -i "s/#network.port: 9200/network.port: 9200/g" elasticsearch.yml'
+  args:
+    chdir: /etc/elasticsearch
+  
+- name: configure elasticsearch
+  become: yes
+  command: 'sed -i "s/#discovery.seed_hosts: ["host1", "host2"]/discovery.seed_hosts: ["127.0.0.1", "[::1]"]/g" elasticsearch.yml'
+  args:
+    chdir: /etc/elasticsearch
 - name: Start Elasticsearch.
   become: yes
   service:
