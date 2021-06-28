@@ -1,0 +1,10 @@
+---
+- hosts: localhost
+  name: Install elasticsearch
+  user: ubuntu
+  become: yes
+  roles:
+    - role: elasticsearch-ansible
+  vars_files:
+    - defaults/main.yml
+

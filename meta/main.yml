@@ -1,0 +1,9 @@
+---
+allow_duplicates: true
+dependencies: []
+
+galaxy_info:
+  author: alexandra
+  description: Cortex install
+  company: "Sopra"
+  license: "GPL-3.0"

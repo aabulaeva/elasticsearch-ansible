@@ -1,0 +1,52 @@
+---
+- name: Ensure Java is installed.
+  become: yes
+  apt:
+    name: openjdk-8-jdk
+    state: present
+- name: Add required dependencies.
+  become: yes
+  apt:
+    name:
+      - apt-transport-https
+      - gnupg2
+    state: present
+
+- name: Add Elasticsearch apt key.
+  become: yes
+  apt_key:
+    url: https://artifacts.elastic.co/GPG-KEY-elasticsearch
+    state: present
+
+- name: Add Elasticsearch repository.
+  become: yes
+  apt_repository:
+    repo: 'deb https://artifacts.elastic.co/packages/7.x/apt stable main'
+    state: present
+    update_cache: true
+- name: Install Elasticsearch.
+  become: yes
+  package:
+    name: elasticsearch
+    state: present
+
+- name: configure elasticsearch
+  become: yes
+  command: sed -i "s/# network.host: 192.168.0.1/network.host: {{elasticsearch_ip}}/g" elasticsearch.yml
+  args:
+    chdir: /etc/elasticsearch
+
+- name: Start Elasticsearch.
+  become: yes
+  service:
+    name: elasticsearch
+    state: started
+    enabled: true
+
+- name: Make sure Elasticsearch is running before proceeding.
+  become: yes
+  wait_for:
+    host: "{{ elasticsearch_ip}}"
+    port: 9200
+    delay: 3
+    timeout: 300
