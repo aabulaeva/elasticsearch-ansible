@@ -43,9 +43,21 @@
   
 - name: configure elasticsearch
   become: yes
-  command: 'sed -i "s/#discovery.seed_hosts: ["host1", "host2"]/discovery.seed_hosts: ["127.0.0.1", "[::1]"]/g" elasticsearch.yml'
+  command: 'sed -i "s/#discovery.seed_hosts: /discovery.seed_hosts:/g" elasticsearch.yml'
   args:
     chdir: /etc/elasticsearch
+- name: configure elasticsearch
+  become: yes
+  command: 'sed -i "s/host1/127.0.0.1/g" elasticsearch.yml'
+  args:
+    chdir: /etc/elasticsearch   
+    
+- name: configure elasticsearch
+  become: yes
+  command: 'sed -i "s/host2/[::1]/g" elasticsearch.yml'
+  args:
+    chdir: /etc/elasticsearch   
+
 - name: Start Elasticsearch.
   become: yes
   service:
