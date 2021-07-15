@@ -37,7 +37,7 @@
     chdir: /etc/elasticsearch
 - name: configure elasticsearch
   become: yes
-  command: 'sed -i "s/#network.port: 9200/network.port: 9200/g" elasticsearch.yml'
+  command: 'sed -i "s/#http.port: 9200/http.port: 9200/g" elasticsearch.yml'
   args:
     chdir: /etc/elasticsearch
   
