@@ -43,7 +43,7 @@
   
 - name: configure elasticsearch
   become: yes
-  command: 'sed -i "s/#discovery.seed_hosts: /discovery.seed_hosts:/g" elasticsearch.yml'
+  command: 'sed -i "s/#discovery.seed_hosts: /discovery.seed_hosts: /g" elasticsearch.yml'
   args:
     chdir: /etc/elasticsearch
 - name: configure elasticsearch
